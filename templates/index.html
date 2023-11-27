@@ -1,13 +1,11 @@
-<html>
-    <head>
-        <title>Auto Fan Thingy</title>
-    </head>
-    <body>
-        <h1>Current Temperature: {{ cur_temp }}</h1>
-        <form action="" method="post">
-            <label for="goal_temp">Goal Temperature: </label>
-            <input type="number" name="goal_temp" step=".1" />
-            <input type="submit" value="Submit" />
-        </form>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Current Temperature: {{ cur_temp }}</h1>
+    <h1>Goal Temperature: {{ goal_temp }}</h1>
+    <form action="" method="post">
+        <label for="goal_temp">Goal Temperature: </label>
+        <input type="number" name="goal_temp" step=".1" />
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}

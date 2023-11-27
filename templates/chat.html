@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>ChatGPT:</h1>
+    {% if reply: %}
+        <p>{{reply}}</p>
+    {% endif %}
+    <form action="/chat" method="post">
+        <label for="user_input">To ChatGPT: </label>
+        <input type="text" name="user_input" />
+        <input type="submit" value="Submit" />
+    </form>
+{% endblock %}
