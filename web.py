@@ -1,11 +1,52 @@
 from flask import Flask, render_template, request
 from openai import OpenAI
+import lgpio
+from time import sleep
+from threading import Thread
+from queue import Queue
 
 app = Flask(__name__)
 
+command = Queue()
+
+def spin_motor(clockwise = True, delay = 0.004, step_max = 4096, con = [17, 27, 22, 23]):
+    #Half-step, so step_max = 4096 for full rotation
+    steps = [
+        0b1001,
+        0b1000,
+        0b1100,
+        0b0100,
+        0b0110,
+        0b0010,
+        0b0011,
+        0b0001
+    ]
+
+    h = lgpio.gpiochip_open(0)
+    lgpio.group_claim_output(h, con)
+
+    try:
+        step = 0
+        while command.empty():
+            lgpio.group_write(h, con[0], steps[step])
+            step = (step - 1) % 8 if clockwise else (step + 1) % 8
+            sleep(delay)
+    except Exception:
+        lgpio.group_write(h, con[0], 0)
+        lgpio.group_free(h, con[0])
+        lgpio.gpiochip_close(h)
+        exit(1)
+
+
+def testy():
+    while command.empty():
+        print("Testing!")
+        sleep(1)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+
+    command.put("tomato")
     if request.method == "POST":
         goal_temp = request.form.get("goal_temp")
         with open("goal_temp.txt","w") as f:
@@ -38,4 +79,8 @@ def post_chat():
 
  
 if __name__ == "__main__":
+
+    t = Thread(target=spin_motor, kwargs={"delay": 0.1})
+    t.start()
+
     app.run(host="0.0.0.0")
