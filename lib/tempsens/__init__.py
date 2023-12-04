@@ -32,7 +32,6 @@ class DHT(object):
 		idx = 0
 		self.bits = [0,0,0,0,0]
 		# Clear sda
-		lgpio.gpio_free(self.h, pin)
 		lgpio.gpio_claim_output(self.h, pin)
 		lgpio.gpio_write(self.h, pin, 1)
 		time.sleep(0.5)
@@ -87,6 +86,7 @@ class DHT(object):
 		lgpio.gpio_free(self.h, pin)
 		lgpio.gpio_claim_output(self.h, pin)
 		lgpio.gpio_write(self.h, pin, 1)
+		lgpio.gpio_free(self.h, pin)
 		return self.DHTLIB_OK
 	#Read DHT sensor, analyze the data of temperature and humidity
 	def readDHT11Once(self):
