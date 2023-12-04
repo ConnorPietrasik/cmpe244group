@@ -43,7 +43,7 @@ def do_stuff():
         #take average of 3 temp readings for accuracy
         try:
             for i in range(3):
-                while dht.readDHT11Once() == dht.DHTLIB_INVALID_VALUE:
+                while dht.readDHT11Once() != dht.DHTLIB_OK:
                     print("Invalid temp reading")
                     sleep(1)
                 avgTemp += dht.temperature
