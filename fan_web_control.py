@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from openai import OpenAI
 import embed_stuff as fan
 from dotenv import load_dotenv
-from os import chdir
+import os
 
 app = Flask(__name__)
 
@@ -10,12 +10,10 @@ app = Flask(__name__)
 def index():
     if request.method == "POST":
         goal_temp = request.form.get("goal_temp")
-        with open("goal_temp.txt","w") as f:
+        with open(fan.doc_root + "goal_temp.txt","w") as f:
             f.write(goal_temp)
         fan.goal_temp = goal_temp
-    with open("cur_temp.txt","r") as f:
-        cur_temp = f.read()
-    return render_template("index.html", cur_temp=cur_temp, goal_temp=fan.goal_temp)
+    return render_template("index.html", cur_temp=fan.cur_temp, goal_temp=fan.goal_temp)
 
 #Should be post, but time
 @app.route("/stop", methods=["GET"])
@@ -41,7 +39,7 @@ def set_cur_temp(val):
 @app.route("/goal", methods=["POST"])
 def set_goal():
     goal_temp = request.get_json()["goal_temp"]
-    with open("goal_temp.txt","w") as f:
+    with open(fan.doc_root + "/goal_temp.txt","w") as f:
         f.write(goal_temp)
         fan.goal_temp = goal_temp
     return "Success!", 200
@@ -72,8 +70,7 @@ def post_chat():
 
 
 #Init stuff here because WSGI
-chdir("/var/www/school/cmpe244")
-load_dotenv()
 fan.init()
+load_dotenv(dotenv_path=fan.doc_root + "/.env")
 
 #app.run("0.0.0.0")

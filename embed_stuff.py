@@ -1,5 +1,6 @@
 from threading import Thread
 from time import sleep
+import os
 import lgpio
 
 PWM_OUT = 12
@@ -79,8 +80,9 @@ def stop():
     lgpio.gpio_free(h_pwm, PWM_OUT)
 
 def init():
-    global goal_temp, cur_temp, h_pwm, prev_temp
-    with open("goal_temp.txt","r") as f:
+    global doc_root, goal_temp, cur_temp, h_pwm, prev_temp
+    doc_root = os.path.dirname(__file__)
+    with open(doc_root + "goal_temp.txt","r") as f:
         goal_temp = f.read()
     cur_temp = 30.1
     h_pwm = lgpio.gpiochip.open(0)
