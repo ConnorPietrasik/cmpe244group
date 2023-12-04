@@ -11,33 +11,31 @@ DHT_PIN = 17
 def spin_fan():
     t_dif = cur_temp - goal_temp
 
-    # if (cur_temp > prev_temp - 0.5 and cur_temp < prev_temp + 0.5):
-    #     return
-    # if t_dif < 0:
-    #     lgpio.tx_pwm(h_pwm, PWM_OUT, 0, 0)
-    #     lgpio.gpio_write(h_pwm, PWM_OUT, 0)
-    # elif t_dif < 2:
-    #     lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 50)
-    # elif t_dif < 4:
-    #     lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 75)
-    # else:
-    #     lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 100) 
-
-    #For LED testing
     if t_dif < 0:
         lgpio.tx_pwm(h_pwm, PWM_OUT, 0, 0)
         lgpio.gpio_write(h_pwm, PWM_OUT, 0)
     elif t_dif < 2:
-        lgpio.tx_pwm(h_pwm, PWM_OUT, 1, 50)
+        lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 50)
     elif t_dif < 4:
-        lgpio.tx_pwm(h_pwm, PWM_OUT, 2, 50)
+        lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 75)
     else:
-        lgpio.tx_pwm(h_pwm, PWM_OUT, 10, 50) 
+        lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 100) 
+
+    #For LED testing
+    #if t_dif < 0:
+    #    lgpio.tx_pwm(h_pwm, PWM_OUT, 0, 0)
+    #    lgpio.gpio_write(h_pwm, PWM_OUT, 0)
+    #elif t_dif < 2:
+    #    lgpio.tx_pwm(h_pwm, PWM_OUT, 1, 50)
+    #elif t_dif < 4:
+    #    lgpio.tx_pwm(h_pwm, PWM_OUT, 2, 50)
+    #else:
+    #    lgpio.tx_pwm(h_pwm, PWM_OUT, 10, 50) 
 
 def display_lcd():
     lcd.clear()
     lcd.text('Current ' + str(cur_temp), 1)
-    lcd.text(enable + ': ' + str(goal_temp), 2)
+    lcd.text(str(enable) + ': ' + str(goal_temp), 2)
 
 def read_sensor():
     global cur_temp
@@ -47,7 +45,7 @@ def read_sensor():
     try:
         for i in range(3):
             while dht.readDHT11Once() != dht.DHTLIB_OK:
-               print("Invalid temp reading")
+               print(f"Invalid temp reading, error: {dht.readDHT11Once()}\tread: {dht.temperature}")
                sleep(0.5)
             avgTemp += dht.temperature
             sleep(0.1)
@@ -61,8 +59,8 @@ def do_stuff():
     global cur_temp
 
     while enable:
-        #read_sensor()
-        #display_lcd()
+        read_sensor()
+        display_lcd()
         spin_fan()
         sleep(5)
         
@@ -79,7 +77,7 @@ def stop():
     fan_thread.join()
     lgpio.gpio_write(h_pwm, PWM_OUT, 0)
     lgpio.gpio_free(h_pwm, PWM_OUT)
-    #lcd.clear()
+    lcd.clear()
 
 
 def init_fan():
@@ -103,7 +101,7 @@ def init():
         goal_temp = float(f.read())
     cur_temp = 30.1
     init_fan()
-    #init_lcd()
+    init_lcd()
     init_dht()
     start()
 

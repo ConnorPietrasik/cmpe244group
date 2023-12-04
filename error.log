@@ -1,0 +1,46 @@
+2023-12-03 21:40:50 xCreatePipe: Can't set permissions (436) for //.lgd-nfy0, No such file or directory
+2023-12-03 21:40:58 xCreatePipe: Can't set permissions (436) for //.lgd-nfy0, No such file or directory
+[Mon Dec 04 01:24:31.592614 2023] [wsgi:error] [pid 26446] mod_wsgi (pid=26446): Failed to exec Python script file '/var/www/school/cmpe244/fan_system.wsgi'.
+[Mon Dec 04 01:24:31.592788 2023] [wsgi:error] [pid 26446] mod_wsgi (pid=26446): Exception occurred processing WSGI script '/var/www/school/cmpe244/fan_system.wsgi'.
+[Mon Dec 04 01:24:31.595161 2023] [wsgi:error] [pid 26446] Traceback (most recent call last):
+[Mon Dec 04 01:24:31.595298 2023] [wsgi:error] [pid 26446]   File "/var/www/school/cmpe244/fan_system.wsgi", line 8, in <module>
+[Mon Dec 04 01:24:31.595321 2023] [wsgi:error] [pid 26446]     from fan_web_control import app as application
+[Mon Dec 04 01:24:31.595360 2023] [wsgi:error] [pid 26446]   File "/var/www/school/cmpe244/fan_web_control.py", line 3, in <module>
+[Mon Dec 04 01:24:31.595381 2023] [wsgi:error] [pid 26446]     import embed_stuff as fan
+[Mon Dec 04 01:24:31.595406 2023] [wsgi:error] [pid 26446]   File "/var/www/school/cmpe244/embed_stuff.py", line 4, in <module>
+[Mon Dec 04 01:24:31.595426 2023] [wsgi:error] [pid 26446]     import lgpio
+[Mon Dec 04 01:24:31.595450 2023] [wsgi:error] [pid 26446]   File "/usr/lib/python3/dist-packages/lgpio.py", line 565, in <module>
+[Mon Dec 04 01:24:31.595470 2023] [wsgi:error] [pid 26446]     _notify_thread = _callback_thread()
+[Mon Dec 04 01:24:31.595494 2023] [wsgi:error] [pid 26446]   File "/usr/lib/python3/dist-packages/lgpio.py", line 507, in __init__
+[Mon Dec 04 01:24:31.595514 2023] [wsgi:error] [pid 26446]     self._file = open('.lgd-nfy{}'.format(self._notify), 'rb')
+[Mon Dec 04 01:24:31.595562 2023] [wsgi:error] [pid 26446] FileNotFoundError: [Errno 2] No such file or directory: '.lgd-nfy-3'
+[Mon Dec 04 09:20:08.902414 2023] [wsgi:error] [pid 1121] mod_wsgi (pid=1121): Failed to exec Python script file '/var/www/school/cmpe244/fan_system.wsgi'.
+[Mon Dec 04 09:20:08.903121 2023] [wsgi:error] [pid 1121] mod_wsgi (pid=1121): Exception occurred processing WSGI script '/var/www/school/cmpe244/fan_system.wsgi'.
+[Mon Dec 04 09:20:08.908730 2023] [wsgi:error] [pid 1121] Traceback (most recent call last):
+[Mon Dec 04 09:20:08.908927 2023] [wsgi:error] [pid 1121]   File "/var/www/school/cmpe244/fan_system.wsgi", line 8, in <module>
+[Mon Dec 04 09:20:08.908960 2023] [wsgi:error] [pid 1121]     from fan_web_control import app as application
+[Mon Dec 04 09:20:08.909016 2023] [wsgi:error] [pid 1121]   File "/var/www/school/cmpe244/fan_web_control.py", line 3, in <module>
+[Mon Dec 04 09:20:08.909045 2023] [wsgi:error] [pid 1121]     import embed_stuff as fan
+[Mon Dec 04 09:20:08.909084 2023] [wsgi:error] [pid 1121]   File "/var/www/school/cmpe244/embed_stuff.py", line 4, in <module>
+[Mon Dec 04 09:20:08.909112 2023] [wsgi:error] [pid 1121]     import lgpio
+[Mon Dec 04 09:20:08.909147 2023] [wsgi:error] [pid 1121]   File "/usr/lib/python3/dist-packages/lgpio.py", line 565, in <module>
+[Mon Dec 04 09:20:08.909174 2023] [wsgi:error] [pid 1121]     _notify_thread = _callback_thread()
+[Mon Dec 04 09:20:08.909208 2023] [wsgi:error] [pid 1121]   File "/usr/lib/python3/dist-packages/lgpio.py", line 507, in __init__
+[Mon Dec 04 09:20:08.909235 2023] [wsgi:error] [pid 1121]     self._file = open('.lgd-nfy{}'.format(self._notify), 'rb')
+[Mon Dec 04 09:20:08.909299 2023] [wsgi:error] [pid 1121] FileNotFoundError: [Errno 2] No such file or directory: '.lgd-nfy-3'
+2023-12-04 09:20:08 xCreatePipe: Can't set permissions (436) for //.lgd-nfy0, No such file or directory
+[Mon Dec 04 09:20:08.925735 2023] [wsgi:error] [pid 1083] mod_wsgi (pid=1083): Failed to exec Python script file '/var/www/school/cmpe244/fan_system.wsgi'.
+[Mon Dec 04 09:20:08.926507 2023] [wsgi:error] [pid 1083] mod_wsgi (pid=1083): Exception occurred processing WSGI script '/var/www/school/cmpe244/fan_system.wsgi'.
+[Mon Dec 04 09:20:08.931655 2023] [wsgi:error] [pid 1083] Traceback (most recent call last):
+[Mon Dec 04 09:20:08.931857 2023] [wsgi:error] [pid 1083]   File "/var/www/school/cmpe244/fan_system.wsgi", line 8, in <module>
+[Mon Dec 04 09:20:08.931953 2023] [wsgi:error] [pid 1083]     from fan_web_control import app as application
+[Mon Dec 04 09:20:08.931997 2023] [wsgi:error] [pid 1083]   File "/var/www/school/cmpe244/fan_web_control.py", line 3, in <module>
+[Mon Dec 04 09:20:08.932027 2023] [wsgi:error] [pid 1083]     import embed_stuff as fan
+[Mon Dec 04 09:20:08.932064 2023] [wsgi:error] [pid 1083]   File "/var/www/school/cmpe244/embed_stuff.py", line 4, in <module>
+[Mon Dec 04 09:20:08.932094 2023] [wsgi:error] [pid 1083]     import lgpio
+[Mon Dec 04 09:20:08.932131 2023] [wsgi:error] [pid 1083]   File "/usr/lib/python3/dist-packages/lgpio.py", line 565, in <module>
+[Mon Dec 04 09:20:08.932161 2023] [wsgi:error] [pid 1083]     _notify_thread = _callback_thread()
+[Mon Dec 04 09:20:08.932214 2023] [wsgi:error] [pid 1083]   File "/usr/lib/python3/dist-packages/lgpio.py", line 507, in __init__
+[Mon Dec 04 09:20:08.932243 2023] [wsgi:error] [pid 1083]     self._file = open('.lgd-nfy{}'.format(self._notify), 'rb')
+[Mon Dec 04 09:20:08.932313 2023] [wsgi:error] [pid 1083] FileNotFoundError: [Errno 2] No such file or directory: '.lgd-nfy-3'
+2023-12-04 09:20:08 xCreatePipe: Can't set permissions (436) for //.lgd-nfy0, No such file or directory
