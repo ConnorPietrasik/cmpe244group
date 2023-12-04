@@ -17,19 +17,25 @@ def index():
         cur_temp = f.read()
     return render_template("index.html", cur_temp=cur_temp, goal_temp=fan.goal_temp)
 
-#Should be post, but TODO
+#Should be post, but time
 @app.route("/stop", methods=["GET"])
 def stop_system():
-    fan.enable = False
+    fan.stop()
     return "Fan system stopped!", 200
 
-#Should be post, but TODO
+#Should be post, but time
 @app.route("/start", methods=["GET"])
 def start_system():
     if fan.enable:
         return "System already on!", 409
     fan.start()
-    return "Fan system stopped!", 200
+    return "Fan system started!", 200
+
+#For testing
+@app.route("/setcur/<val>", methods=["GET"])
+def set_cur_temp(val):
+    fan.cur_temp = val
+    return f"Cur temp set to {val}", 200
 
 #Expects json body, "goal_temp": {float}
 @app.route("/goal", methods=["POST"])
@@ -70,4 +76,4 @@ chdir("/var/www/school/cmpe244")
 load_dotenv()
 fan.init()
 
-app.run("0.0.0.0")
+#app.run("0.0.0.0")
