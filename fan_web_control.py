@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from openai import OpenAI
 import embed_stuff as fan
+from dotenv import load_dotenv
 from os import chdir
 
 app = Flask(__name__)
@@ -66,4 +67,7 @@ def post_chat():
 
 #Init stuff here because WSGI
 chdir("/var/www/school/cmpe244")
+load_dotenv()
 fan.init()
+
+app.run("0.0.0.0")
