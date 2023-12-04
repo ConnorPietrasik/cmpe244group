@@ -41,20 +41,20 @@ def do_stuff():
     while enable:
         avgTemp = 0
         #take average of 3 temp readings for accuracy
-        try:
-            for i in range(3):
-                while dht.readDHT11Once() == DHT.DHTLIB_INVALID_VALUE:
-                    print("Invalid temp reading")
-                    sleep(1)
-                avgTemp += dht.temperature
-                sleep(0.1)
-        except RuntimeError:
-            print("Temperature check failed")
+        # try:
+        #     for i in range(3):
+        #         while dht.readDHT11Once() == dht.DHTLIB_INVALID_VALUE:
+        #             print("Invalid temp reading")
+        #             sleep(1)
+        #         avgTemp += dht.temperature
+        #         sleep(0.1)
+        # except RuntimeError:
+        #     print("Temperature check failed")
 
-        #calculate average
-        cur_temp = int(avgTemp/3)
+        # #calculate average
+        # cur_temp = int(avgTemp/3)
 		
-        display_lcd()
+        #display_lcd()
         spin_fan()
         sleep(5)
         
