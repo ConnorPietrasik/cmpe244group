@@ -14,23 +14,23 @@ def spin_fan():
     # if (cur_temp > prev_temp - 0.5 and cur_temp < prev_temp + 0.5):
     #     return
     # if t_dif < 0:
-    #     lgpio.tx_pwm(h, PWM_OUT, 0, 0)
+    #     lgpio.tx_pwm(h_pwm, PWM_OUT, 0, 0)
     # elif t_dif < 2:
-    #     lgpio.tx_pwm(h, PWM_OUT, 10000, 50)
+    #     lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 50)
     # elif t_dif < 4:
-    #     lgpio.tx_pwm(h, PWM_OUT, 10000, 75)
+    #     lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 75)
     # else:
-    #     lgpio.tx_pwm(h, PWM_OUT, 10000, 100) 
+    #     lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 100) 
 
     #For LED testing
     if t_dif < 0:
-        lgpio.tx_pwm(h, PWM_OUT, 0, 0)
+        lgpio.tx_pwm(h_pwm, PWM_OUT, 0, 0)
     elif t_dif < 2:
-        lgpio.tx_pwm(h, PWM_OUT, 1, 50)
+        lgpio.tx_pwm(h_pwm, PWM_OUT, 1, 50)
     elif t_dif < 4:
-        lgpio.tx_pwm(h, PWM_OUT, 2, 50)
+        lgpio.tx_pwm(h_pwm, PWM_OUT, 2, 50)
     else:
-        lgpio.tx_pwm(h, PWM_OUT, 10, 50) 
+        lgpio.tx_pwm(h_pwm, PWM_OUT, 10, 50) 
 
 def display_lcd():
     print("display lcd here")
@@ -70,21 +70,21 @@ def stop():
     global enable, fan_thread
     enable = False
     fan_thread.join()
-    lgpio.gpio_write(h, PWM_OUT, 0)
-    lgpio.gpio_free(h, PWM_OUT)
+    lgpio.gpio_write(h_pwm, PWM_OUT, 0)
+    lgpio.gpio_free(h_pwm, PWM_OUT)
 
 
 def init_fan():
-    global h
-    h = lgpio.gpiochip_open(0)
-    lgpio.gpio_claim_output(h, PWM_OUT)
+    global h_pwm
+    h_pwm = lgpio.gpiochip_open(0)
+    lgpio.gpio_claim_output(h_pwm, PWM_OUT)
 
 def init_dht():
     global dht
-    dht = DHT.DHT(h, DHT_PIN)
+    dht = DHT.DHT(DHT_PIN)
 
 def init():
-    global doc_root, goal_temp, cur_temp, h
+    global doc_root, goal_temp, cur_temp
     doc_root = os.path.dirname(__file__)
     with open(doc_root + "/goal_temp.txt","r") as f:
         goal_temp = float(f.read())

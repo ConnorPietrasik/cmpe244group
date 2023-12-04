@@ -21,11 +21,11 @@ class DHT(object):
 	humidity = 0
 	temperature = 0
 	
-	def __init__(self, h, pin):
+	def __init__(self, pin):
 		self.pin = pin
 		self.bits = [0,0,0,0,0]
 		# GPIO.setmode(GPIO.BOARD)
-		self.h = h #Connor
+		self.h = lgpio.gpiochip_open(0) #Connor
 	#Read DHT sensor, store the original data in bits[]	
 	def readSensor(self,pin,wakeupDelay):
 		mask = 0x80
