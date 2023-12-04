@@ -63,7 +63,7 @@ def spin_fan():
 
 def do_stuff():
     while enable:
-        spin_fan
+        spin_fan()
         sleep(5)
 
 def start():
@@ -83,7 +83,7 @@ def init():
     global doc_root, goal_temp, cur_temp, h_pwm, prev_temp
     doc_root = os.path.dirname(__file__)
     with open(doc_root + "/goal_temp.txt","r") as f:
-        goal_temp = f.read()
+        goal_temp = float(f.read())
     cur_temp = 30.1
     h_pwm = lgpio.gpiochip_open(0)
     lgpio.gpio_claim_output(h_pwm, PWM_OUT)
