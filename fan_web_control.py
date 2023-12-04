@@ -74,4 +74,4 @@ fan.init()
 load_dotenv(dotenv_path=fan.doc_root + "/.env")
 
 if __name__ == "__main__":
-    app.run("0.0.0.0")
+    app.run("0.0.0.0", 80)
