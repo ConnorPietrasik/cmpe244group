@@ -19,7 +19,7 @@ def index():
 @app.route("/stop", methods=["GET"])
 def stop_system():
     fan.stop()
-    return "Fan system stopped!", 200
+    return index()
 
 #Should be post, but time
 @app.route("/start", methods=["GET"])
@@ -27,7 +27,7 @@ def start_system():
     if fan.enable:
         return "System already on!", 409
     fan.start()
-    return "Fan system started!", 200
+    return index()
 
 #For testing
 @app.route("/setcur/<val>", methods=["GET"])
