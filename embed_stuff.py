@@ -36,7 +36,7 @@ PWM_OUT = 12
 
 def spin_fan():
     global prev_temp
-    t_dif = goal_temp - cur_temp
+    t_dif = cur_temp - goal_temp
 
     #Don't call pwm stuff if not a big difference
     # if (cur_temp > prev_temp - 0.5 and cur_temp < prev_temp + 0.5):
