@@ -85,7 +85,7 @@ def init():
     with open(doc_root + "/goal_temp.txt","r") as f:
         goal_temp = f.read()
     cur_temp = 30.1
-    h_pwm = lgpio.gpiochip.open(0)
+    h_pwm = lgpio.gpiochip_open(0)
     lgpio.gpio_claim_output(h_pwm, PWM_OUT)
     prev_temp = 0
     start()
