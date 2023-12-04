@@ -1,5 +1,6 @@
 from smbus import SMBus
 from time import sleep
+import lgpio
 
 ALIGN_FUNC = {
     'left': 'ljust',

@@ -5,7 +5,8 @@
 # Author      : freenove
 # modification: 2020/10/16
 ########################################################################
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
+import lgpio #Connor
 import time
 
 class DHT(object):
@@ -20,54 +21,58 @@ class DHT(object):
 	humidity = 0
 	temperature = 0
 	
-	def __init__(self,pin):
+	def __init__(self,pin, h):
 		self.pin = pin
 		self.bits = [0,0,0,0,0]
-		GPIO.setmode(GPIO.BOARD)
+		# GPIO.setmode(GPIO.BOARD)
+		self.h = h #Connor
 	#Read DHT sensor, store the original data in bits[]	
 	def readSensor(self,pin,wakeupDelay):
 		mask = 0x80
 		idx = 0
 		self.bits = [0,0,0,0,0]
 		# Clear sda
-		GPIO.setup(pin,GPIO.OUT)
-		GPIO.output(pin,GPIO.HIGH)
+		lgpio.gpio_free(self.h, pin)
+		lgpio.claim_output(self.h, pin)
+		lgpio.gpio_write(self.h, pin, 1)
 		time.sleep(0.5)
 		# start signal
-		GPIO.output(pin,GPIO.LOW)
+		lgpio.gpio_write(self.h, pin, 0)
 		time.sleep(wakeupDelay)
-		GPIO.output(pin,GPIO.HIGH)
+		lgpio.gpio_write(self.h, pin, 1)
 		# time.sleep(0.000001)
-		GPIO.setup(pin,GPIO.IN)
+		lgpio.gpio_free(self.h, pin)
+		lgpio.claim_input(self.h, pin)
 		
 		loopCnt = self.DHTLIB_TIMEOUT
 		# Waiting echo
 		t = time.time()
 		while True:
-			if (GPIO.input(pin) == GPIO.LOW):
+			# if (GPIO.input(pin) == GPIO.LOW):
+			if (not lgpio.gpio_read(self.h, pin)):
 				break
 			if((time.time() - t) > loopCnt):
 				return self.DHTLIB_ERROR_TIMEOUT
 		# Waiting echo low level end
 		t = time.time()
-		while(GPIO.input(pin) == GPIO.LOW):
+		while(not lgpio.gpio_read(self.h, pin)):
 			if((time.time() - t) > loopCnt):
 				#print ("Echo LOW")
 				return self.DHTLIB_ERROR_TIMEOUT
 		# Waiting echo high level end
 		t = time.time()
-		while(GPIO.input(pin) == GPIO.HIGH):
+		while(lgpio.gpio_read(self.h, pin)):
 			if((time.time() - t) > loopCnt):
 				#print ("Echo HIGH")
 				return self.DHTLIB_ERROR_TIMEOUT
 		for i in range(0,40,1):
 			t = time.time()
-			while(GPIO.input(pin) == GPIO.LOW):
+			while(not lgpio.gpio_read(self.h, pin)):
 				if((time.time() - t) > loopCnt):
 					#print ("Data Low %d"%(i))
 					return self.DHTLIB_ERROR_TIMEOUT
 			t = time.time()
-			while(GPIO.input(pin) == GPIO.HIGH):
+			while(lgpio.gpio_read(self.h, pin)):
 				if((time.time() - t) > loopCnt):
 					#print ("Data HIGH %d"%(i))
 					return self.DHTLIB_ERROR_TIMEOUT		
@@ -79,8 +84,9 @@ class DHT(object):
 				mask = 0x80
 				idx += 1	
 		#print (self.bits)
-		GPIO.setup(pin,GPIO.OUT)
-		GPIO.output(pin,GPIO.HIGH)
+		lgpio.gpio_free(self.h, pin)
+		lgpio.claim_output(self.h, pin)
+		lgpio.gpio_write(self.h, pin, 1)
 		return self.DHTLIB_OK
 	#Read DHT sensor, analyze the data of temperature and humidity
 	def readDHT11Once(self):
