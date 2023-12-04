@@ -82,7 +82,7 @@ def stop():
 def init():
     global doc_root, goal_temp, cur_temp, h_pwm, prev_temp
     doc_root = os.path.dirname(__file__)
-    with open(doc_root + "goal_temp.txt","r") as f:
+    with open(doc_root + "/goal_temp.txt","r") as f:
         goal_temp = f.read()
     cur_temp = 30.1
     h_pwm = lgpio.gpiochip.open(0)
