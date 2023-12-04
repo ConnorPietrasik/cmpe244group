@@ -2,7 +2,7 @@ from threading import Thread
 from time import sleep
 import os
 import lgpio
-#import lib.lcd as lcd
+from lib.lcd import LCD
 import lib.tempsens as DHT
 
 PWM_OUT = 12
@@ -33,7 +33,9 @@ def spin_fan():
         lgpio.tx_pwm(h_pwm, PWM_OUT, 10, 50) 
 
 def display_lcd():
-    print("display lcd here")
+    lcd.clear()
+    lcd.text('Current ' + str(cur_temp), 1)
+    lcd.text(enable + ': ' + str(goal_temp), 2)
 
 def do_stuff():
     global cur_temp
@@ -43,11 +45,14 @@ def do_stuff():
         #take average of 3 temp readings for accuracy
         try:
             for i in range(3):
-                while dht.readDHT11Once() != dht.DHTLIB_OK:
-                    print("Invalid temp reading")
-                    sleep(1)
-                avgTemp += dht.temperature
-                print(f"avgtemp: {avgTemp}")
+                #while dht.readDHT11Once() != dht.DHTLIB_OK:
+                #    print("Invalid temp reading")
+                #    sleep(1)
+                #avgTemp += dht.temperature
+
+                avgTemp += cur_temp #REMOVE
+                
+                #print(f"avgtemp: {avgTemp}")
                 sleep(0.1)
         except RuntimeError:
             print("Temperature check failed")
@@ -55,7 +60,7 @@ def do_stuff():
         #calculate average
         cur_temp = int(avgTemp/3)
 		
-        #display_lcd()
+        display_lcd()
         spin_fan()
         sleep(5)
         
@@ -72,12 +77,18 @@ def stop():
     fan_thread.join()
     lgpio.gpio_write(h_pwm, PWM_OUT, 0)
     lgpio.gpio_free(h_pwm, PWM_OUT)
+    lcd.clear()
 
 
 def init_fan():
     global h_pwm
     h_pwm = lgpio.gpiochip_open(0)
     lgpio.gpio_claim_output(h_pwm, PWM_OUT)
+
+def init_lcd():
+    global lcd
+    lcd = LCD(width=16, rows=2) #instantiate lcd variable
+    lcd.clear()
 
 def init_dht():
     global dht

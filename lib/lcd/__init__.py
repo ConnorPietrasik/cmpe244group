@@ -1,4 +1,4 @@
-from smbus import SMBus
+# from smbus import SMBus
 from time import sleep
 import lgpio
 
@@ -21,7 +21,8 @@ class LCD(object):
 
     def __init__(self, address=0x27, bus=1, width=20, rows=4, backlight=True):
         self.address = address
-        self.bus = SMBus(bus)
+        # self.bus = SMBus(bus)
+        self.h = lgpio.i2c_open(bus, address)
         self.delay = 0.0005
         self.rows = rows
         self.width = width
@@ -36,10 +37,13 @@ class LCD(object):
         sleep(self.delay)
 
     def _write_byte(self, byte):
-        self.bus.write_byte(self.address, byte)
-        self.bus.write_byte(self.address, (byte | ENABLE_BIT))
+        #self.bus.write_byte(self.address, byte)
+        # self.bus.write_byte(self.address, (byte | ENABLE_BIT))
+        lgpio.i2c_write_byte(self.h, byte)
+        lgpio.i2c_write_byte(self.h, (byte | ENABLE_BIT))
         sleep(self.delay)
-        self.bus.write_byte(self.address,(byte & ~ENABLE_BIT))
+        # self.bus.write_byte(self.address,(byte & ~ENABLE_BIT))
+        lgpio.i2c_write_byte(self.h, (byte & ~ENABLE_BIT))
         sleep(self.delay)
 
     def write(self, byte, mode=0):
