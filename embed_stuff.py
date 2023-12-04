@@ -51,7 +51,7 @@ def do_stuff():
                 #avgTemp += dht.temperature
 
                 avgTemp += cur_temp #REMOVE
-                
+
                 #print(f"avgtemp: {avgTemp}")
                 sleep(0.1)
         except RuntimeError:
@@ -101,6 +101,7 @@ def init():
         goal_temp = float(f.read())
     cur_temp = 30.1
     init_fan()
+    init_lcd()
     init_dht()
     start()
 
