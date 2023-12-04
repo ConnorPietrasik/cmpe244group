@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from openai import OpenAI
 import embed_stuff as fan
-
-#import lgpio
+from os import chdir
 
 app = Flask(__name__)
 
@@ -64,9 +63,7 @@ def post_chat():
 
     return render_template("chat.html", reply=reply)
 
- 
-if __name__ == "__main__":
 
-    fan.init()
-
-    app.run(host="0.0.0.0")
+#Init stuff here because WSGI
+chdir("/var/www/school/cmpe244")
+fan.init()
