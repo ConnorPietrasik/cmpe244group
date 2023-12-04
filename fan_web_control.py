@@ -51,16 +51,16 @@ def get_chat():
 @app.route("/chat", methods=["POST"])
 def post_chat():
     client = OpenAI()
-    reply = request.form.get("user_input")
-    if reply: 
+    req = request.form.get("user_input")
+    if req: 
         chat = client.chat.completions.create(
             model="gpt-3.5-turbo", 
             messages=[ {"role": "system", "content": "You are Johnny, the CTI One technical support for CMPE244_FAN_SYSTEM."},
-                       {"role": "user", "content": reply}] 
+                       {"role": "user", "content": req}] 
         ) 
         reply = chat.choices[0].message.content 
         token_cost = chat.usage.total_tokens
-        print(f"ChatGPT: {reply}\nCost: {token_cost}") 
+        print(f"User: {req}\nChatGPT: {reply}\nCost: {token_cost}") 
 
     return render_template("chat.html", reply=reply)
 
