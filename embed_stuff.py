@@ -82,7 +82,6 @@ def init_fan():
 def init_dht():
     global dht
     dht = DHT.DHT(h, DHT_PIN)
-    lgpio.gpio_claim_input(h, DHT_PIN)
 
 def init():
     global doc_root, goal_temp, cur_temp, h
