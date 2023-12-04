@@ -12,7 +12,7 @@ def index():
         goal_temp = request.form.get("goal_temp")
         with open(fan.doc_root + "goal_temp.txt","w") as f:
             f.write(goal_temp)
-        fan.goal_temp = goal_temp
+        fan.goal_temp = float(goal_temp)
     return render_template("index.html", cur_temp=fan.cur_temp, goal_temp=fan.goal_temp)
 
 #Should be post, but time
@@ -32,7 +32,7 @@ def start_system():
 #For testing
 @app.route("/setcur/<val>", methods=["GET"])
 def set_cur_temp(val):
-    fan.cur_temp = val
+    fan.cur_temp = float(val)
     return f"Cur temp set to {val}", 200
 
 #Expects json body, "goal_temp": {float}
