@@ -73,4 +73,5 @@ def post_chat():
 fan.init()
 load_dotenv(dotenv_path=fan.doc_root + "/.env")
 
-#app.run("0.0.0.0")
+if __name__ == "__main__":
+    app.run("0.0.0.0")
