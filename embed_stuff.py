@@ -60,7 +60,7 @@ def do_stuff():
         #calculate average
         cur_temp = int(avgTemp/3)
 		
-        display_lcd()
+        #display_lcd()
         spin_fan()
         sleep(5)
         
@@ -77,7 +77,7 @@ def stop():
     fan_thread.join()
     lgpio.gpio_write(h_pwm, PWM_OUT, 0)
     lgpio.gpio_free(h_pwm, PWM_OUT)
-    lcd.clear()
+    #lcd.clear()
 
 
 def init_fan():
@@ -101,7 +101,7 @@ def init():
         goal_temp = float(f.read())
     cur_temp = 30.1
     init_fan()
-    init_lcd()
+    #init_lcd()
     init_dht()
     start()
 
