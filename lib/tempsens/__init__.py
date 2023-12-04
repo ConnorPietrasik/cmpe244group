@@ -33,7 +33,7 @@ class DHT(object):
 		self.bits = [0,0,0,0,0]
 		# Clear sda
 		lgpio.gpio_free(self.h, pin)
-		lgpio.claim_output(self.h, pin)
+		lgpio.gpio_claim_output(self.h, pin)
 		lgpio.gpio_write(self.h, pin, 1)
 		time.sleep(0.5)
 		# start signal
@@ -42,7 +42,7 @@ class DHT(object):
 		lgpio.gpio_write(self.h, pin, 1)
 		# time.sleep(0.000001)
 		lgpio.gpio_free(self.h, pin)
-		lgpio.claim_input(self.h, pin)
+		lgpio.gpio_claim_input(self.h, pin)
 		
 		loopCnt = self.DHTLIB_TIMEOUT
 		# Waiting echo
@@ -85,7 +85,7 @@ class DHT(object):
 				idx += 1	
 		#print (self.bits)
 		lgpio.gpio_free(self.h, pin)
-		lgpio.claim_output(self.h, pin)
+		lgpio.gpio_claim_output(self.h, pin)
 		lgpio.gpio_write(self.h, pin, 1)
 		return self.DHTLIB_OK
 	#Read DHT sensor, analyze the data of temperature and humidity
