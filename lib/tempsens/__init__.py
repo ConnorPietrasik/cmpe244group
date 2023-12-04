@@ -21,7 +21,7 @@ class DHT(object):
 	humidity = 0
 	temperature = 0
 	
-	def __init__(self,pin, h):
+	def __init__(self, h, pin):
 		self.pin = pin
 		self.bits = [0,0,0,0,0]
 		# GPIO.setmode(GPIO.BOARD)

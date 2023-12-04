@@ -2,7 +2,7 @@ from threading import Thread
 from time import sleep
 import os
 import lgpio
-import lib.lcd as lcd
+#import lib.lcd as lcd
 import lib.tempsens as DHT
 
 PWM_OUT = 12
@@ -80,7 +80,7 @@ def init_fan():
 
 def init_dht():
     global dht
-    dht = DHT.DHT(DHT_PIN)
+    dht = DHT.DHT(h, DHT_PIN)
     lgpio.gpio_claim_input(h, DHT_PIN)
 
 def init():
