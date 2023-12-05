@@ -59,7 +59,7 @@ def do_stuff():
     global cur_temp
 
     while enable:
-        read_sensor()
+        #read_sensor()
         display_lcd()
         spin_fan()
         sleep(5)
