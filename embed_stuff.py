@@ -10,10 +10,9 @@ DHT_PIN = 17
 
 def spin_fan():
     t_dif = cur_temp - goal_temp
-
     if t_dif < 0:
-        lgpio.tx_pwm(h_pwm, PWM_OUT, 0, 0)
-        lgpio.gpio_write(h_pwm, PWM_OUT, 0)
+        lgpio.tx_pwm(h_pwm, PWM_OUT, 1, 0)
+        #lgpio.gpio_write(h_pwm, PWM_OUT, 0)
     elif t_dif < 2:
         lgpio.tx_pwm(h_pwm, PWM_OUT, 10000, 50)
     elif t_dif < 4:
@@ -35,7 +34,7 @@ def spin_fan():
 def display_lcd():
     lcd.clear()
     lcd.text('Current ' + str(cur_temp), 1)
-    lcd.text(str(enable) + ': ' + str(goal_temp), 2)
+    lcd.text('Goal' + ': ' + str(goal_temp), 2)
 
 def read_sensor():
     global cur_temp
@@ -99,10 +98,10 @@ def init():
     doc_root = os.path.dirname(__file__)
     with open(doc_root + "/goal_temp.txt","r") as f:
         goal_temp = float(f.read())
-    cur_temp = 30.1
+    cur_temp = 15
     init_fan()
     init_lcd()
-    init_dht()
+    #init_dht()
     start()
 
 if __name__ == "__main__":
