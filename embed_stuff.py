@@ -22,7 +22,8 @@ def spin_fan():
 
     #For LED testing
     #if t_dif < 0:
-    #    lgpio.tx_pwm(h_pwm, PWM_OUT, 0, 0)
+    #    lgpio.tx_pwm(h_pwm, PWM_OUT, 1, 0)
+    #    sleep(0.1)
     #    lgpio.gpio_write(h_pwm, PWM_OUT, 0)
     #elif t_dif < 2:
     #    lgpio.tx_pwm(h_pwm, PWM_OUT, 1, 50)
@@ -34,7 +35,7 @@ def spin_fan():
 def display_lcd():
     lcd.clear()
     lcd.text('Current ' + str(cur_temp), 1)
-    lcd.text('Goal' + ': ' + str(goal_temp), 2)
+    lcd.text('Goal: ' + str(goal_temp), 2)
 
 def read_sensor():
     global cur_temp
@@ -58,7 +59,7 @@ def do_stuff():
     global cur_temp
 
     while enable:
-        #read_sensor()
+        read_sensor()
         display_lcd()
         spin_fan()
         sleep(5)
@@ -101,7 +102,7 @@ def init():
     cur_temp = 15
     init_fan()
     init_lcd()
-    #init_dht()
+    init_dht()
     start()
 
 if __name__ == "__main__":

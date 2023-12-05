@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify
 from openai import OpenAI
 import embed_stuff as fan
 from dotenv import load_dotenv
-import os
 
 app = Flask(__name__)
 
@@ -19,7 +18,7 @@ def index():
 @app.route("/stop", methods=["GET"])
 def stop_system():
     fan.stop()
-    return index()
+    return render_template("control.html", cur_temp=fan.cur_temp, goal_temp=fan.goal_temp)
 
 #Should be post, but time
 @app.route("/start", methods=["GET"])
@@ -27,13 +26,17 @@ def start_system():
     if fan.enable:
         return "System already on!", 409
     fan.start()
-    return index()
+    return render_template("control.html", cur_temp=fan.cur_temp, goal_temp=fan.goal_temp)
 
 #For testing
 @app.route("/setcur/<val>", methods=["GET"])
 def set_cur_temp(val):
     fan.cur_temp = float(val)
     return f"Cur temp set to {val}", 200
+
+@app.route("/cur", methods=["GET"])
+def get_cur():
+    return jsonify({"cur_temp": fan.cur_temp}), 200
 
 #Expects json body, "goal_temp": {float}
 @app.route("/goal", methods=["POST"])
